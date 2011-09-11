@@ -24,6 +24,7 @@ namespace OfficialMediaUploadPlugin
 
         public void Loaded()
         {
+            TwitterPictureResolver.Init();
             UploaderManager.RegisterUploader(new TwitterUploader());
         }
 

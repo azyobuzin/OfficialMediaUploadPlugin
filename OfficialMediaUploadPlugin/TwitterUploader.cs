@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Xml;
 using System.Xml.Linq;
 using Acuerdo.External.Uploader;
 using Acuerdo.Injection;
@@ -16,7 +18,7 @@ namespace OfficialMediaUploadPlugin
 {
     public class TwitterUploader : IUploader
     {
-        private const string ApiUrl = "https://upload.twitter.com/1/statuses/update_with_media.xml";
+        private const string ApiUrl = "https://upload.twitter.com/1/statuses/update_with_media.json";
 
         private OAuth lastCredential = null;
         private string lastPath = null;
@@ -71,7 +73,8 @@ namespace OfficialMediaUploadPlugin
                         data.Add(new SendData("in_reply_to_status_id", text: arg.Item3.Value.ToString()));
 
                     //投稿
-                    var res = Http.WebUpload(req, data, Encoding.UTF8, s => TwitterStatus.FromNode(XElement.Load(s)));
+                    var res = Http.WebUpload(req, data, Encoding.UTF8, s =>
+                        TwitterStatus.FromNode(XElement.Load(JsonReaderWriterFactory.CreateJsonReader(s, XmlDictionaryReaderQuotas.Max))));
 
                     if (res.ThrownException != null)
                         throw res.ThrownException;
@@ -103,12 +106,12 @@ namespace OfficialMediaUploadPlugin
 
         public bool IsResolvable(string url)
         {
-            throw new NotImplementedException();
+            return TwitterPictureResolver.IsResolvable(url);
         }
 
         public string Resolve(string url)
         {
-            throw new NotImplementedException();
+            return TwitterPictureResolver.Resolve(url);
         }
     }
 }
