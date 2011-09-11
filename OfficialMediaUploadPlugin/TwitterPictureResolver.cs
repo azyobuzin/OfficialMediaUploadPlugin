@@ -13,14 +13,21 @@ namespace OfficialMediaUploadPlugin
         {
             TweetStorage.TweetStorageChanged += (sender, e) =>
             {
-                if (e.ActionKind == TweetActionKind.Added && e.Tweet != null)
+                try
                 {
-                    var media = e.Tweet.Status.Entities.GetChildNode("media");
-                    if (media != null)
+                    if (e.ActionKind == TweetActionKind.Added && e.Tweet != null)
                     {
-                        media.Children.OfType<TwitterEntityNode>().ForEach(entity =>
-                            imageUrlDic.Add(entity.GetChildValue("expanded_url").Value, entity.GetChildValue("media_url").Value));
+                        var media = e.Tweet.Status.Entities.GetChildNode("media");
+                        if (media != null)
+                        {
+                            media.Children.OfType<TwitterEntityNode>().ForEach(entity =>
+                                imageUrlDic.Add(entity.GetChildValue("expanded_url").Value, entity.GetChildValue("media_url").Value));
+                        }
                     }
+                }
+                catch
+                {
+                    //エラーは無視
                 }
             };
         }
