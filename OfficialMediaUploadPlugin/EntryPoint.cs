@@ -24,7 +24,7 @@ namespace OfficialMediaUploadPlugin
 
         public void Loaded()
         {
-            UploaderManager.RegisterUploader(new UpdateWithMedia());
+            UploaderManager.RegisterUploader(new TwitterUploader());
         }
 
         public IConfigurator ConfigurationInterface

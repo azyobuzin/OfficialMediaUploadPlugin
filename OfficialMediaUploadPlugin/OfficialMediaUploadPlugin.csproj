@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Livet">
+      <HintPath>..\Mystique\Mystique\InfrastructureAssemblies\Livet.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -42,7 +45,7 @@
   <ItemGroup>
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UpdateWithMedia.cs" />
+    <Compile Include="TwitterUploader.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mystique\Acuerdo\Acuerdo.csproj">
